@@ -54,7 +54,7 @@ def guardar_en_fdf(matriz, nombre_archivo):
             archivo.write(fila_str[:-1] + "\n")
 
 # URL de la imagen
-url_imagen = "https://www3.gobiernodecanarias.org/medusa/ecoblog/mrodperv/files/2015/12/f.jpg"
+url_imagen = "https://live.staticflickr.com/5708/30103735833_8b68cde11a.jpg"
 
 # Nombre del archivo FDF
 nombre_archivo = "map.fdf"
