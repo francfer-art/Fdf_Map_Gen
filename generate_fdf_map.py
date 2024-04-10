@@ -12,11 +12,6 @@ def generar_matriz_desde_imagen(url_imagen):
         # Abrir la imagen desde los datos descargados
         imagen = Image.open(BytesIO(respuesta.content))
         
-        # Redimensionar la imagen para hacerla más pequeña
-        ancho_nuevo = 100  # Cambia este valor según el tamaño deseado
-        alto_nuevo = int(imagen.height * (ancho_nuevo / imagen.width))
-        imagen = imagen.resize((ancho_nuevo, alto_nuevo))
-        
         # Obtener las dimensiones de la imagen
         ancho, alto = imagen.size
         
@@ -32,7 +27,7 @@ def generar_matriz_desde_imagen(url_imagen):
                 # Calcular la profundidad como la escala de grises ponderada
                 profundidad = int(0.2126 * pixel[0] + 0.7152 * pixel[1] + 0.0722 * pixel[2])
                 # Convertir el color RGB en un valor hexadecimal sin el símbolo "#"
-                color_hex = '{:02x}{:02x}{:02x}'.format(pixel[0], pixel[1], pixel[2])
+                color_hex = '{:02x}{:02x}{:02x}{:02x}'.format(pixel[0], pixel[1], pixel[2], 255)  # Agregando un valor de alfa constante de 255
                 # Agregar el par profundidad-color a la fila
                 fila.append((profundidad, color_hex))
             # Agregar la fila a la matriz
@@ -48,7 +43,7 @@ def guardar_en_fdf(matriz, nombre_archivo):
         for fila in matriz:
             fila_str = ""
             for punto in fila:
-                # Concatenar la profundidad y el color en formato hexadecimal
+                # Concatenar la profundidad y el color en formato hexadecimal RGBA
                 fila_str += "{},0x{} ".format(punto[0], punto[1])
             # Escribir la fila en el archivo, eliminando el espacio final
             archivo.write(fila_str[:-1] + "\n")
